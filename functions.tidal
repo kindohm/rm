@@ -1,0 +1,45 @@
+let
+  harmor = s "harmor"
+  rytm = s "rytm"
+  sb = sometimesBy
+  ssb = someCyclesBy
+  shift x = (1 ~>) $ x
+  shiftBy num x = (num ~>) $ x
+  x pat = ccv pat # ccn 1 # harmor # midichan 0
+  y pat = ccv pat # ccn 2 # harmor # midichan 0
+  z pat = ccv pat # ccn 3 # harmor # midichan 0
+  width pat = ccv pat # ccn 4 # harmor # midichan 0
+  prism pat = ccv pat # ccn 5 # harmor # midichan 0
+  unidetune pat = ccv pat # ccn 6 # harmor # midichan 0
+  attack pat = ccv pat # ccn 7 # harmor # midichan 0
+  env1 pat = ccv pat # ccn 8 # harmor # midichan 0
+  rel pat = ccv pat # ccn 9 # harmor # midichan 0
+  atk pat = ccv pat # ccn 10 # harmor # midichan 0
+  dec pat = ccv pat # ccn 11 # harmor # midichan 0
+  sus pat = ccv pat # ccn 12 # harmor # midichan 0
+  harm pat = ccv pat # ccn 13 # harmor # midichan 0
+  phoff pat = ccv pat # ccn 14 # harmor # midichan 0
+  pitchenv pat = ccv pat # ccn 15 # harmor # midichan 0
+  detune pat = ccv pat # ccn 16 # harmor # midichan 0
+  detunediv pat = ccv pat # ccn 17 # harmor # midichan 0
+  width1 pat = ccv pat # ccn 18 # harmor # midichan 0
+  samplestart pat = ccv pat # ccn 28 # rytm
+  sampleend pat = ccv pat # ccn 29 # rytm
+  perf1 pat = ccv pat # ccn 35 # rytm # midichan 0
+  perf2 pat = ccv pat # ccn 36 # rytm # midichan 0
+  perf3 pat = ccv pat # ccn 37 # rytm # midichan 0
+  perf4 pat = ccv pat # ccn 39 # rytm # midichan 0
+  perf5 pat = ccv pat # ccn 40 # rytm # midichan 0
+  perf11 pat = ccv pat # ccn 46 # rytm # midichan 0
+  one prob x = sb prob (stutWith 2 0.0625 id) $ shift $ x
+  g x = (const $ s "~") $ x
+  limit x = (|* gain 1.2) $ x
+  cpsDisc min max = (|* cps (range min max $ slow 33891 rand))
+  cpsTri min max dur = (|* cps (range min max $ slow dur tri))
+  shrand x = (shiftBy x $ rand)
+  shiftby = shiftBy
+
+
+d1 $ fast 8 $ s "harmor" # midichan 0 # rel (range 0 127 $ slow 33 rand) # cps 1
+
+hush

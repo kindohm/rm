@@ -1,0 +1,26 @@
+do
+  let pat = "t(<3 2 1>,16,<3 1>)"
+  d1
+    $ shift
+    $ limit
+    $ every 3 rev
+    $ degradeBy 0.3
+    $ stack [
+      slow 8 $ midichan 4 # rytm # note "c3"
+      , g $ off 0.0625 (# midichan 10) $ sb 0.33 (off 0.0625 id) $ shift 
+        $ sb 0.333 (# midichan 6) 
+        $ struct pat $ midichan 2 # rytm # note "c3"
+      , off (0.0625*3) (# midichan 1) 
+        $ slow "<2 3 4>" $ (0.5 ~>) $ midichan 3 # rytm # note "c3"
+      , (0.25 ~>) $ slow "<4 5 6>" $ midichan 0 # rytm # note "<c3 c2>"
+      , perf1 (segment 1 $ range 0 127 $ shrand 111)
+      , perf2 (segment 1 $ range 0 127 $ shrand 2829)
+      , perf3 (segment 1 $ range 0 127 $ shrand 1829)
+      , perf4 (segment 1 $ range 0 127 $ shrand 829)
+      , perf5 (segment 1 $ range 0 127 $ shrand 222)
+      , degradeBy 0.2 $ slow "<2 5 4 3>" $ harmor # note "<c4 c3>"
+      , x (segment 0.5 $ range 0 127 $ shrand 82934)
+      , y (segment 0.5 $ range 0 127 $ shrand 444)
+    ] # cps (160/120/2)
+
+    hush

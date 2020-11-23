@@ -1,0 +1,40 @@
+do
+  let 
+    howoften = 6
+    repbase main replacement = gain (randcat ( 
+                        (replicate 1 (fast 1 $ main)) 
+                    ++ (replicate 2 (fast 2 $ main))
+                    ++ (replicate 3 (fast 3 $ main)) 
+                    ++ (replicate 4 (fast 4 $ main)) 
+                    ++ (replicate 5 (fast 5 $ main)) 
+                    ++ (replicate 6 (fast 6 $ main)) 
+                    ++ (replicate 7 (fast 7 $ main)) 
+                    ++ (replicate howoften replacement) 
+                        ))
+    gainpat = repbase "1" "~"
+    stabgainpat = repbase "1" "0.4"
+    invgainpat = repbase "~" "1"
+  d1
+    $ shiftBy 3318
+    $ whenmod 80 40 (cpsTri 0.25 1 4.1)
+    $ cpsDisc 0.25 2
+    $ limit
+    $ degradeBy 0
+    $ stack [
+      whenmod 40 39 (plyWith "<2 4 6>" (# midichan 6)) $ gainpat # s "rytm" # midichan "[2]" # note "c3"
+      , whenmod 60 30 g $ (0.5 ~>) $ gainpat # midichan 10 # s "rytm" # note "c3"
+      , invgainpat # s "rytm" # midichan 3 # note "c3"
+      , stabgainpat # s "harmor" # midichan 0 # note "c4"
+      , slow 1 $ gain 1 # width ((9 ~>) $ range 7 50 $ slow 51 perlin)
+      , gain 1 # x ((666 ~>) $ range 0 127 $ slow 55 perlin)
+      , gain 1 # y ((999 ~>) $ range 0 127 $ slow 40 perlin)
+      , gain 1 # harm ((88 ~>) $ range 0 127 $ slow 15 perlin)
+      , gain 1 # unidetune ((40 ~>) $ range 10 100 $ slow 30 perlin)
+      , gain 1 # atk ((32895 ~>) $ range 0 127 $ slow 45 perlin)
+      , slow 4 $ gain 1 # env1 (shiftBy 8392 $ choose [0,127])
+    ] # cps 1
+
+
+d1 $ fast 8 $ s "harmor" # env1 (range 0 127 $ slow 3 rand) 
+
+    hush
