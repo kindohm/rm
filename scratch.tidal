@@ -1,0 +1,26 @@
+do
+  d1
+    $ cpsDisc 0.3 1
+    $ stack [
+      fluidDrums1
+      , fluidPerc1
+      , fluidStab1
+      , thicken $ padstut 0.333 $ fluidFx1
+    ] # cps "<4 2 3 2 1 1>"
+  d2
+    $ fast 3 $ jux (iter 8 . (# cut "2342342")) 
+      $ (# pad2orbit)
+      $ backwards 0.333 $ low 0.333 $ fluidBg1
+  p "ccs"
+    $ stack [
+      sb 0.2 (# ccv 80) $ shift $ snareverb 0
+      , gran (segment 2 $ range 0 127 $ slow 10 perlin)
+      , axiom (segment 2 $ shiftBy 1000 $ range 0 127 $ slow 10 perlin)
+      , axiom1 (segment 2 $ shiftBy 2000 $ range 0 127 $ slow 10 perlin)
+      , axiom2 (segment 2 $ shiftBy 3000 $ range 0 127 $ slow 10 perlin)
+      , rev1size (segment 2 $ shiftBy 4000 $ range 0 127 $ slow 10 perlin)
+      , rev2size (segment 2 $ shiftBy 5000 $ range 0 127 $ slow 10 perlin)
+    ]
+
+
+    hush

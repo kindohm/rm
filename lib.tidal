@@ -1,0 +1,36 @@
+let
+  thicken x = superimpose ((|* speed 0.97) . (# pan (shiftBy 30 $ rand)) . (# cut 5))
+                  $ superimpose ((|* speed 1.02) . (# pan (shiftBy 32 $ rand)) . (# cut 4)) $ x
+  padstut prob x = ssb 0.2 (stutWith "<7 4 5 6 8>" "<0.125 0.333 0.25>" (# gain 0.9)) $ shift $ x
+  low prob x = sb prob (|* speed 0.5) $ shift $ x
+  backwards prob x = sb prob (|* speed "-1") $ shift $ x
+  fluidDrums1 = limit $ every "<2 3 4>" (off 0.125 ((# s "fsd") . (# sdorbit)))         
+                  $ sb 0.333 (off 0.0625 id) 
+                  $ shift
+                  $ sb 0.25 ((# s "doof") . (# end (range 0.5 1 $ shrand 17)))
+                  $ shift
+                  $ roll2 0.333 
+                  $ s "fmbd" # n (shiftBy 23 $ irand 5) # cut "-1" # bdorbit
+  fluidPerc1 = ssb 0.2 (plyWith "<5 3 7>" id )
+                  $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ s "ch" # gain 0.65 # percorbit
+  fluidStab1 = slow (segment 1 (choose [1,1.1..2])) 
+                  $ degradeBy 0.6
+                  $ s "speeds6stab" 
+                    # n (shiftBy 7 $ irand 20) # cut 32389
+                    # note (scale "ritusen" (shiftBy 7 $ choose [0,(-1)..(-10)])) # staborbit
+  fluidBg1 = limit
+                  $ (# begin (range 0.5 1 $ shrand 8293))
+                  $ slow 1.333 $ (0.5 ~>) 
+                  $ n "7" # s "br2049" # note "<f4 f4 f4 g4>" 
+                  # begin 0.622 # end (range 0 0.3 $ shrand 7111) # cut "<1 1 1 1 ~>" 
+                  # pad2orbit # gain 1.1
+  fluidFx1 = limit
+                  $ degradeBy 0.4 $ slow 2.666 $ (0.74 ~>)
+                  $ s "br2049" # n 11 # note "f4" # begin 0.575 
+                    # lpf (range 700 5000 $ shrand 8719) 
+                    # hpf (range 80 2000 $ shrand 12)
+                    # percorbit # cut 3 # end (range 0.8 1 $ shrand 819) # gain 1
+
+
+
+hush

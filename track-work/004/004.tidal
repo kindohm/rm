@@ -1,0 +1,37 @@
+do
+  let pat = "t(<3 2 1>,16,<3 1>)"
+      whoa x = degradeBy (segment 1 $ range 0 0.7 $ shrand 771) $ shift $ x
+  d1
+    $ limit
+    $ stack [
+      g $ slow 8 $ midichan 4 # rytm # note "c3"
+      -- kicks + hat
+      , g $ whenmod 28 20 g $ whoa $ off 0.0625 (# midichan 10) $ sb 0.33 (off 0.0625 id) $ shift 
+        $ sb 0.333 (# midichan 6) 
+        $ struct pat $ midichan 2 # rytm # note "c3"
+      -- snares
+      , g $ whenmod 26 17 g $ whoa $ sb 0.5(off (0.0625*3) (# midichan 1) ) 
+        $ shift
+        $ slow "<2 3 4>" $ (0.5 ~>) $ midichan 3 # rytm # note "c3"
+      -- bass
+      , g $ degradeBy 0.5 $ shiftBy 3 $ (0.25 ~>) $ slow "<4 5 6>" $ midichan 0 # rytm # note "<c3 c2>"
+      , perf1 (segment 1 $ range 0 127 $ shrand 111)
+      , perf2 (segment 1 $ range 0 127 $ shrand 2829)
+      , perf3 (segment 3 $ shiftBy 378310 $ choose [0,0,0,0,127])
+      , perf4 (segment 1 $ range 0 127 $ shrand 829)
+      , degradeBy 0.2 $ slow "<2 5 4 3>" $ (0.75 ~>) $ harmor # note "<c4 c3>"
+      , x (segment 0.5 $ range 0 127 $ shrand 82934)
+      , y (segment 0.5 $ range 0 127 $ shrand 444)
+    ] # cps (160/120/2)
+
+    hush
+
+
+
+    d1 $ limit $ stack [ 
+      slow 3 $ harmor # note "<c4 c3>" # legato 0.9
+      , x (segment (1/3) $ range 0 127 $ shrand 82934)
+      , y (segment (1/3) $ range 0 127 $ shrand 444) 
+    ] # cps (160/120/2)
+
+    hush

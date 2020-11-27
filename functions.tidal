@@ -31,15 +31,53 @@ let
   perf4 pat = ccv pat # ccn 39 # rytm # midichan 0
   perf5 pat = ccv pat # ccn 40 # rytm # midichan 0
   perf11 pat = ccv pat # ccn 46 # rytm # midichan 0
-  one prob x = sb prob (stutWith 2 0.0625 id) $ shift $ x
   g x = (const $ s "~") $ x
   limit x = (|* gain 1.2) $ x
   cpsDisc min max = (|* cps (range min max $ slow 33891 rand))
   cpsTri min max dur = (|* cps (range min max $ slow dur tri))
   shrand x = (shiftBy x $ rand)
   shiftby = shiftBy
+  bdorbit = orbit 0
+  sdorbit = orbit 1
+  percorbit = orbit 2
+  staborbit = orbit 3
+  padorbit = orbit 4
+  pad2orbit = orbit 5
+  snareorbit = sdorbit
+  bgorbit = padorbit
+  bg2orbit = pad2orbit
+  snareverb pat = ccv pat # s "cc" # ccn 1
+  axiom pat = ccv pat # s "cc" # ccn 2
+  gran pat = ccv pat # s "cc" # ccn 3
+  axiom1 pat = ccv pat # s "cc" # ccn 4
+  axiom2 pat = ccv pat # s "cc" # ccn 5
+  rev1size pat = ccv pat # s "cc" # ccn 6
+  rev2size pat = ccv pat # s "cc" # ccn 7
+  one prob x = sb prob (stutWith 2 0.0625 id) $ shift $ x
+  roll prob x = sb prob (stutWith 2 (0.0625*3) id) $ shift $ x
+  roll2 prob x = sb prob (stutWith 2 (0.125*3) id) $ shift $ x
+  thicken x = superimpose ((|* speed 0.97) . (# pan (shiftBy 30 $ rand)) . (# cut 5))
+                  $ superimpose ((|* speed 1.02) . (# pan (shiftBy 32 $ rand)) . (# cut 4)) $ x
+  padstut prob x = ssb 0.2 (stutWith "<7 4 5 6 8>" "<0.125 0.333 0.25>" (# gain 0.9)) $ shift $ x
+  low prob x = sb prob (|* speed 0.5) $ shift $ x
+  backwards prob x = sb prob (|* speed "-1") $ shift $ x
 
+d1 $ s "harmor" # midichan 0 # y (range 0 127 $ slow 33 rand)
 
-d1 $ fast 8 $ s "harmor" # midichan 0 # rel (range 0 127 $ slow 33 rand) # cps 1
+d1 $ stack [
+  s "harmor" # midichan 0 # x (range 0 127 $ slow 33 rand)
+  , s "harmor" # midichan 0 # y (range 0 127 $ slow 3311 rand)
+  , s "harmor" # note "c4" # legato (range 0.75 1 $ shrand 891)
+ ] # cps "<3 1 2 1 0.5 0.5>"
 
 hush
+
+d1 
+  $ limit
+  $ stack [ 
+    note "<c3 c2>"
+    , perf1 (segment 1 $ range 0 127 $ shrand 8293) # midichan 0
+    , ccn 102 # ccv (range 70 90 $ shrand 8791) # midichan 0
+  ] # s "rytm" # midichan 0 # cps (180/120/2)
+
+  hush
