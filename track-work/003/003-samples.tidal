@@ -3,7 +3,7 @@
 
 do
   p "drums"
-    $ cpsDisc 0.125 1
+    $ cpsDisc 0.25 1
     $ shiftBy 829 
     $ every 3 rev 
     $ shift
@@ -47,10 +47,10 @@ do
   p "ccs"
     $ stack [
       ssb 0.333 (# ccv 90) $ snareverb 0
-      , gran (segment 2 $ (234 ~>) $ range 0 127 $ slow 5 perlin)
-      , axiom (segment 2 $ shiftBy 1001 $ range 0 127 $ slow 5 perlin)
-      , axiom1 (segment 2 $ shiftBy 2001 $ range 0 127 $ slow 5 perlin)
-      , axiom2 (segment 2 $ shiftBy 3001 $ range 0 127 $ slow 5 perlin)
+      --, gran (segment 2 $ (234 ~>) $ range 0 127 $ slow 5 perlin)
+      --, axiom (segment 2 $ shiftBy 1001 $ range 0 127 $ slow 5 perlin)
+      --, axiom1 (segment 2 $ shiftBy 2001 $ range 0 127 $ slow 5 perlin)
+      --, axiom2 (segment 2 $ shiftBy 3001 $ range 0 127 $ slow 5 perlin)
     ]
 
 
