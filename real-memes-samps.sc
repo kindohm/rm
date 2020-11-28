@@ -19,9 +19,11 @@ s.waitForBoot {
 
 	MIDIClient.init;
 
-	// ~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Analog Rytm out 1");
-	// ~rytmOut.latency = 0;
-	// ~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
+	/*
+	~rytmOut = MIDIOut.newByName("Elektron Analog Rytm", "Analog Rytm out 1");
+	~rytmOut.latency = 0;
+	~dirt.soundLibrary.addMIDI(\rytm, ~rytmOut);
+	*/
 
 	~harmorOut = MIDIOut.newByName("IAC Driver", "Bus 1");
 	~harmorOut.latency = 0;

@@ -1,26 +1,48 @@
 do
-  d1
-    $ cpsDisc 0.3 1
+  let pat = "1(<5 3 3>,16,<0 5 10>)"
+  d1 
+    $ limit
+    $ whenmod 20 16 (iter 8)
+    $ every 3 rev
+    $ rip 0.25
+    $ degradeBy (segment (1/8) $ range 0 0.8 $ shrand 82934)
+    $ shift
     $ stack [
-      fluidDrums1
-      , fluidPerc1
-      , fluidStab1
-      , thicken $ padstut 0.333 $ fluidFx1
-    ] # cps "<4 2 3 2 1 1>"
-  d2
-    $ fast 3 $ jux (iter 8 . (# cut "2342342")) 
-      $ (# pad2orbit)
-      $ backwards 0.333 $ low 0.333 $ fluidBg1
+      (# n (shiftBy 10 $ irand 54))
+        $ sb 0.2 (|* speed "-1")
+        $ roll 0.5 
+        $ one 0.5
+        $ dg5
+        $ gain "1(<3 2 3 5>,16,<0 5 10 15>)" 
+        # s (shiftBy 3 $ choose ["ang1"])
+        # staborbit 
+        # cut (shiftBy 383 $ choose [10,20,30])
+        # speed (shiftBy 44 $ range 0.5 1 $ shrand 8181)
+      , one 0.333 
+        $ sb 0.125 (# s "sub")
+        $ superimpose ((# s "grain1") . (# end (range 0.025 0.15 $ shrand 81911)) . (# cut 22) . (# n 2) . (# hpf 100)) 
+        $ struct pat $ s "bd" # n 0 # bdorbit # shape 0.2 # cut 2
+      , superimpose ((# s "ch") . (# cut 999) . (# end 0.2) . (# begin 0) . (# gain 0.7) . (# speed 0.9)) 
+        $ (# end (range 0.61 0.7 $ shrand 81)) 
+        $ struct (inv pat) $ s "herb1" # n 10 # begin 0.6 
+        # cut 7171 # speed 1 # shape 0.3
+        # percorbit
+      , whenmod 8 4 (0.125 ~>) 
+        $ (0.5 ~>) $ s "tek" # n (shiftBy 23 $ irand 10) # shape 0.5 # gain 1.1
+    ] # cps (160/120/2)
   p "ccs"
     $ stack [
-      sb 0.2 (# ccv 80) $ shift $ snareverb 0
-      , gran (segment 2 $ range 0 127 $ slow 10 perlin)
-      , axiom (segment 2 $ shiftBy 1000 $ range 0 127 $ slow 10 perlin)
-      , axiom1 (segment 2 $ shiftBy 2000 $ range 0 127 $ slow 10 perlin)
-      , axiom2 (segment 2 $ shiftBy 3000 $ range 0 127 $ slow 10 perlin)
-      , rev1size (segment 2 $ shiftBy 4000 $ range 0 127 $ slow 10 perlin)
-      , rev2size (segment 2 $ shiftBy 5000 $ range 0 127 $ slow 10 perlin)
+      rev1size (segment 1 $ range 0 127 $ slow 10 perlin)
+      , rev2size (segment 1 $ shiftBy 1000 $ range 0 127 $ slow 10 perlin)
     ]
 
 
-    hush
+
+
+
+hush
+
+
+d1 $ ripOLD 0.6 (0.0625/8) $ s "bd(3,8)"
+
+  hush

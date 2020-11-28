@@ -1,6 +1,17 @@
 let
   harmor = s "harmor"
   rytm = s "rytm"
+  dg0 = degradeBy 0
+  dg1 = degradeBy 0.1
+  dg2 = degradeBy 0.2
+  dg3 = degradeBy 0.3
+  dg4 = degradeBy 0.4
+  dg5 = degradeBy 0.5
+  dg6 = degradeBy 0.6
+  dg7 = degradeBy 0.7
+  dg8 = degradeBy 0.8
+  dg9 = degradeBy 0.9
+  dg10 = degradeBy 1.0
   sb = sometimesBy
   ssb = someCyclesBy
   shift x = (1 ~>) $ x
@@ -61,6 +72,9 @@ let
   padstut prob x = ssb 0.2 (stutWith "<7 4 5 6 8>" "<0.125 0.333 0.25>" (# gain 0.9)) $ shift $ x
   low prob x = sb prob (|* speed 0.5) $ shift $ x
   backwards prob x = sb prob (|* speed "-1") $ shift $ x
+  ripOLD a b p = within (0.25, 0.75) (slow 2 . rev . stut 8 a b) p
+  ripOLD' a b c d e p = within (a, b) (slow 2 . rev . stut c d e) p
+  rip prob x = ssb prob (ripOLD 0.6 (0.0625/8)) $ shift $ x
 
 d1 $ s "harmor" # midichan 0 # y (range 0 127 $ slow 33 rand)
 
