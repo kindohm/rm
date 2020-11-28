@@ -1,0 +1,30 @@
+do
+  let pat2 = "1(<2 3 3 2>, 16, <10 20 30>)"
+  p "kit5" 
+    $ limit
+    $ rip 0.33
+    $ foldEvery [2,3] (0.25 ~>)
+    $ shift
+    $ stack [
+      superimpose ((# n 4) . (# cut 81181) . (0.125 ~>) . (# shape 0.1))
+        $ one 0.3 $ rep "<9 10 8 11>" $ slow 5 $ s "kit5" # cut 771 # n 0
+      , every 5 (jux rev) 
+        $ palindrome 
+        $ every 2 rev 
+          $ iter 16 $ (0.5 ~>) $ s "kit5" # n 1 # end (range 0.25 1 $ shrand 811)
+          # lpf 3000
+    ] 
+  p "bg"
+    $ sb 0.5 (|* speed "-1")
+    $ slow "<5 7 6>" 
+        $ s "pad01" 
+        # n (shiftBy 2224 $ irand 20) # hpf 200 # gain 1.1
+        # speed "<1 0.5 1>"
+    # padorbit
+  p "ccs"
+    $ stack [
+      rev1size (segment 1 $ range 0 127 $ slow 10 perlin)
+      , rev2size (segment 1 $ shiftBy 1000 $ range 0 127 $ slow 10 perlin)
+    ]
+
+    hush

@@ -22,14 +22,10 @@ do
     $ sb 0.333 (|* speed "-1")
     $ shift
     $ sb 0.333 (off 0.333 ((|* speed "<0.5 2 0.25 1.5>") . (# cut 111)))
-    $ slow 8 $ s "br2049" # n 8 # padorbit # begin 0.21 # note "<g4>" # hpf 100
+    $ slow 8 $ s "br2049" # n 8 # padorbit # begin 0.21 # note "<g4>" # hpf 100 # gain 1.1
   p "ccs"
     $ stack [
       ssb 0.1 (# ccv 80) $ snareverb 0
-      --, axiom (segment 2 $ shiftBy 1001 $ range 0 127 $ slow 5 perlin)
-      --, axiom1 (segment 2 $ shiftBy 2001 $ range 0 127 $ slow 5 perlin)
-      --, axiom2 (segment 2 $ shiftBy 3001 $ range 0 127 $ slow 5 perlin)
-      --, gran (segment 2 $ (234 ~>) $ range 0 127 $ slow 5 perlin)
       , rev1size (segment 2 $ shiftBy 4000 $ range 0 127 $ slow 5 perlin)
       , rev2size (segment 2 $ shiftBy 5000 $ range 0 127 $ slow 5 perlin)
     ]

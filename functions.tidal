@@ -75,6 +75,15 @@ let
   ripOLD a b p = within (0.25, 0.75) (slow 2 . rev . stut 8 a b) p
   ripOLD' a b c d e p = within (a, b) (slow 2 . rev . stut c d e) p
   rip prob x = ssb prob (ripOLD 0.6 (0.0625/8)) $ shift $ x
+  rip2 prob x = ssb prob (ripOLD 0.6 (0.0625/4)) $ shift $ x
+  rip3 prob x = ssb prob (ripOLD 0.6 (0.0625/16)) $ shift $ x
+  rip' prob x = ssb prob (ripOLD' 0 1 8 0.6 (0.0625/8)) $ shift $ x
+  rip2' prob x = ssb prob (ripOLD' 0 1 8 0.6 (0.0625/4)) $ shift $ x
+  rip3' prob x = ssb prob (ripOLD' 0 1 8 0.6 (0.0625/16)) $ shift $ x
+  rep times x = stutWith times (0.125*3) id $ x
+  rep' times x = stutWith times (0.0625*3) id $ x
+  beginend bpat durpat = (begin bpat) # (end $ (+) <$> bpat <*> durpat)
+  be = beginend
 
 d1 $ s "harmor" # midichan 0 # y (range 0 127 $ slow 33 rand)
 

@@ -1,48 +1,35 @@
 do
-  let pat = "1(<5 3 3>,16,<0 5 10>)"
-  d1 
+  let pat = (one 0.2 $ "1(<3 7 5 2 1>,16,<1 11 21>)") :: Pattern Double
+  d1
     $ limit
-    $ whenmod 20 16 (iter 8)
-    $ every 3 rev
-    $ rip 0.25
-    $ degradeBy (segment (1/8) $ range 0 0.8 $ shrand 82934)
-    $ shift
+    $ chunk 4 (|+ n 1)
+    $ dg5
     $ stack [
-      (# n (shiftBy 10 $ irand 54))
-        $ sb 0.2 (|* speed "-1")
-        $ roll 0.5 
-        $ one 0.5
-        $ dg5
-        $ gain "1(<3 2 3 5>,16,<0 5 10 15>)" 
-        # s (shiftBy 3 $ choose ["ang1"])
-        # staborbit 
-        # cut (shiftBy 383 $ choose [10,20,30])
-        # speed (shiftBy 44 $ range 0.5 1 $ shrand 8181)
-      , one 0.333 
-        $ sb 0.125 (# s "sub")
-        $ superimpose ((# s "grain1") . (# end (range 0.025 0.15 $ shrand 81911)) . (# cut 22) . (# n 2) . (# hpf 100)) 
-        $ struct pat $ s "bd" # n 0 # bdorbit # shape 0.2 # cut 2
-      , superimpose ((# s "ch") . (# cut 999) . (# end 0.2) . (# begin 0) . (# gain 0.7) . (# speed 0.9)) 
-        $ (# end (range 0.61 0.7 $ shrand 81)) 
-        $ struct (inv pat) $ s "herb1" # n 10 # begin 0.6 
-        # cut 7171 # speed 1 # shape 0.3
-        # percorbit
-      , whenmod 8 4 (0.125 ~>) 
-        $ (0.5 ~>) $ s "tek" # n (shiftBy 23 $ irand 10) # shape 0.5 # gain 1.1
-    ] # cps (160/120/2)
+        gain pat # n (segment 1 $ shiftBy 91 $ choose [4,17,6,9,13]) 
+          # s "elem1" # gain 0.9 # cut 2834
+          # speed "<1 1 1 1 -1>"
+          # staborbit
+      , gain pat # s "bd" # n 6 # bdorbit
+      , (0.125 <~) $ s "sd/2" # n 2 # shape 0.2 # sdorbit
+      , gain "1(<3 5 7>,16,<0 6 1>)" # s "ch" # n 1 # gain 0.7
+      , roll 1 $ (0.25 <~) $ s "sub/4" # n 1 # end 0.5 # cut 7839 # gain 0.9
+      , roll 1 $ (0.25 <~) $ s "itmepad/4" # n 181 # cut 1112 # gain 0.7 # hpf 400 
+    ] # cps (180/120/2)
   p "ccs"
     $ stack [
-      rev1size (segment 1 $ range 0 127 $ slow 10 perlin)
-      , rev2size (segment 1 $ shiftBy 1000 $ range 0 127 $ slow 10 perlin)
+      snareverb 0
+      , rev1size (segment 1 $ range 0 127 $ shrand 711)
+      , rev2size (segment 1 $ range 0 127 $ shrand 919)
     ]
 
+    4, 17, 22, 31
+
+    d2 
+      $ superimpose ((1000 ~>) . (|* speed 0.5))
+      $ slow 3
+      $ s "scrape*64" 
+      # beginend (range "< 0.4 0.2 0.5>" "<0.6 0.7 0.8 1>" $ slow 3 saw) (range 0.03 0.07 $ slow 3.1 tri)
+      # pad2orbit # gain 0.6 # speed "<0.8>"
 
 
-
-
-hush
-
-
-d1 $ ripOLD 0.6 (0.0625/8) $ s "bd(3,8)"
-
-  hush
+    hush
