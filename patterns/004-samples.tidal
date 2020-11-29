@@ -1,28 +1,27 @@
 do
   let pat = "t(<3 2 1>,16,<3 1>)"
       whoa x = degradeBy (segment 1 $ range 0 0.7 $ shrand 771) $ shift $ x
-  p "drums"
+  d1
     $ every 3 rev
     $ limit
-    $ whoa
     $ stack [
-      one 0.33 
+      whoa $ one 0.33 
         $ sb 0.333 (# s "pow") 
         $ struct pat $ s "fmbd2" # n (shiftBy 23811 $ irand 10) # bdorbit
       -- snares
-      , sb 0.5 (off (0.0625*3) (# s "sd") ) 
+      , whoa $ sb 0.5 (off (0.0625*3) (# s "sd") ) 
         $ shift
         $ slow "<2 3 4>" $ (0.5 ~>) $ s "fsd2" # sdorbit
-      , (0.0625 <~) $ one 0.33 $ struct pat $ s "chd" # percorbit # gain 0.5 # cut 71 # n (shiftby 231114 $ irand 5)
-      , degradeBy 0.25 $ (0.75 ~>) $ slow "<6 5 4 6>" $ s "memestab" # staborbit # cut 771 # hpf 80 # n (shiftBy 8222 $ irand 10) # gain 1 
+      , whoa $ (0.0625 <~) $ one 0.33 $ struct pat $ s "chd" # percorbit # gain 0.5 # cut 71 # n (shiftby 231114 $ irand 5)
+      , whoa $ degradeBy 0.25 $ (0.75 ~>) $ slow "<6 5 4 6>" 
+          $ s "memestab" # staborbit # cut 771 # hpf 80 # n (shiftBy 8222 $ irand 10) # gain 1
       , degradeBy 0.25 $ shiftBy 3 $ (0.25 ~>) $ slow "<4 5 6>" $ s "grind" # staborbit # n (shiftBy 99 $ irand 10) # pan (range 0.25 0.75 $ shrand 8293)
+    , sb 0.333 (|* speed "-1")
+      $ shift
+      $ sb 0.333 (off 0.333 ((|* speed "<0.5 2 0.25 1.5>") . (# cut 111)))
+      $ slow 7 $ s "br2049" # n 8 # padorbit # begin 0.21 # note "<g4>" # hpf 100 # gain 1.1
     ] # cps (160/120/2)
-  p "bg"
-    $ slow 1 $ limit
-    $ sb 0.333 (|* speed "-1")
-    $ shift
-    $ sb 0.333 (off 0.333 ((|* speed "<0.5 2 0.25 1.5>") . (# cut 111)))
-    $ slow 8 $ s "br2049" # n 8 # padorbit # begin 0.21 # note "<g4>" # hpf 100 # gain 1.1
+
   p "ccs"
     $ stack [
       ssb 0.1 (# ccv 80) $ snareverb 0

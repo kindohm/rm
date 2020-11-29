@@ -1,0 +1,8 @@
+d1
+  $ limit
+  $ stack [
+    dg7 $ shift $ gain pat # s "maze1" # n (shiftBy 3892 $ irand 20) # padorbit
+      # speed (range 0.5 1 $ shrand 81911)
+  ] # cps (100/120/2)
+
+  hush

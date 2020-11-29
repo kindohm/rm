@@ -1,35 +1,28 @@
 
 
 
-do
-  p "drums"
-    $ cpsDisc 0.25 1
-    $ shiftBy 829 
-    $ every 3 rev 
-    $ shift
-    $ sb 0.2 (|* speed "-1")
-    $ shift
-    $ limit
-    $ stack [     
-      every "<2 3 4>" (off 0.125 ((# s "fsd") . (# sdorbit)))         
-        $ sb 0.333 (off 0.0625 id) 
-        $ shift
-        $ sb 0.25 ((# s "doof") . (# end (range 0.5 1 $ shrand 17)))
-        $ shift
-        $ sb 0.333 (off (0.125*3) id) 
-        $ s "fmbd" # n (shiftBy 23 $ irand 5) # cut "-1" # bdorbit
-      , whenmod 50 25 g $ whenmod 30 15 g $ ssb 0.2 (plyWith "<5 3 7>" id )
-        $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ s "ch" # gain 0.65 # percorbit
-    ] # cps "<3 2 3 2 1 0.5>"
-  p "stabs"
-    $ slow (segment 1 (choose [1,1.1..2])) 
+d1 
+  $ cpsDisc 0.25 0.75
+  $ shiftBy 829 
+  $ every 3 rev 
+  $ shift
+  $ limit
+  $ stack [     
+    every "<2 3 4>" (off 0.125 ((# s "fsd") . (# sdorbit)))         
+      $ sb 0.333 (off 0.0625 id) 
+      $ shift
+      $ sb 0.25 ((# s "doof") . (# end (range 0.5 1 $ shrand 17)))
+      $ shift
+      $ sb 0.333 (off (0.125*3) id) 
+      $ s "fmbd" # n (shiftBy 23 $ irand 5) # cut "-1" # bdorbit
+    , whenmod 50 25 g $ whenmod 30 15 g $ ssb 0.2 (plyWith "<5 3 7>" id )
+      $ rev $ plyWith "<3 5 7>" (# gain 0.8) $ s "ch" # gain 0.65 # percorbit
+  , slow (segment 1 (choose [1,1.1..2])) 
     $ degradeBy 0.6
     $ s "speeds6stab" 
       # n (shiftBy 7 $ irand 20) # cut 32389
-      # note (scale "ritusen" (shiftBy 7 $ choose [0,(-1)..(-10)])) # staborbit
-  p "bg2"
-    $ limit
-    $ ssb 0.2 (stutWith "<7 4 5 6 8>" "<0.125 0.333 0.25>" (# gain 0.9))
+      # note (scale "ritusen" (shiftBy 7 $ choose [0,(-1)..(-10)])) # staborbit  
+  , ssb 0.2 (stutWith "<7 4 5 6 8>" "<0.125 0.333 0.25>" (# gain 0.9))
     $ shift
     $ superimpose ((|* speed 0.97) . (# pan (shiftBy 30 $ rand)) . (# cut 5))
     $ superimpose ((|* speed 1.02) . (# pan (shiftBy 32 $ rand)) . (# cut 4))
@@ -38,12 +31,12 @@ do
       # lpf (range 700 3000 $ shrand 8719) 
       # hpf (range 80 1000 $ shrand 12)
       # percorbit # cut 3 # end (range 0.8 1 $ shrand 819) # gain 0.95
-  p "bg"
-    $ limit
-    $ (# begin (range 0.5 1 $ shrand 8293))
+  , (# begin (range 0.5 1 $ shrand 8293))
     $ sb 0.1 (|* speed 0.5)
     $ slow 1.333 $ (0.5 ~>) 
     $ n "7" # s "br2049" # note "<f4 f4 f4 g4>" # begin 0.622 # end (range 0 0.3 $ shrand 7111) # cut "<1 1 1 1 ~>" # padorbit # gain 1.1
+  ] # cps "<3 2 3 2 1 0.5>"
+
   p "ccs"
     $ stack [
       ssb 0.333 (# ccv 90) $ snareverb 0

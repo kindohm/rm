@@ -1,0 +1,11 @@
+
+
+d1
+  $ limit
+  $ stack [
+      slow 4 $ s "badpad" 
+        # n (shiftBy 100 $ irand 20) # pad2orbit 
+        # speed (range 0.5 0.75 $ shrand 811) # gain 1 
+  ] # cps (100/120/2)
+
+  hush

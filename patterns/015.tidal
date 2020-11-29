@@ -1,0 +1,25 @@
+do
+  let fu2 = (shiftBy 839110 . spreadr ($) [(# gain 0.8), (# gain 0.8), (# gain 0.8), (|* gain 0.97)])
+      fu = (# gain 0.85)
+      plyPatOrig = "<6 1 15>"
+      plyPat = plyPatOrig
+  d1  
+    $ limit
+    $ stack [
+      (|* legato 2)
+      $ every 2 (within (0.5,1) (|+ n "<2>"))
+        $ plyWith plyPat id
+        $ gain "<1 1 1>"
+        # s "speeds2pad" 
+        # n "0"
+        # note "<c5 c5 c5 c5 [g4]>"
+        # cps "<2 2 0.5>"
+        # begin "<0.1 0.1 0.5>"
+        # legato "<1 1 1 1 1 1.5>"
+        # padorbit
+      , g $ plyWith plyPat fu $ s "clearkit" # n (segment 1 $ shiftBy 389 $ choose [0,0,2]) # legato 1
+      , g $ (|* gain 0.8) 
+        $ plyWith plyPat fu $ (0.5 ~>) $ s "clearkit" # n 3 # gain 0.9 # lpf 5000
+    ]
+
+  hush

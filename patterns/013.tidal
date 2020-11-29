@@ -1,0 +1,21 @@
+
+hush
+
+
+d1
+  $ limit
+  $ palindrome
+  $ stutWith 8 (0.25) ((|* gain 0.8) . (# pan (shiftby 333 rand)))
+  $ foldEvery [3,4] (|+ n "<1 2 1>")  
+  $ foldEvery [2,3] (|* speed 0.5)
+  $ stack [
+    g $ (# n "{0 1 -1 2 -2}%16")
+      $ rep "{4 6 5 7}%13" $ slow 3 $ s "pluck" # padorbit
+    , g $ shift
+      $ s "ang1"
+      # n (shiftBy 32434 $ irand 30) 
+      # speed (range 0.25 0.5 $ shrand 92034)
+      # lpf 5000 # pad2orbit
+  ] # cps (100/120/2)
+
+  hush

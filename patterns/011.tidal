@@ -1,0 +1,21 @@
+
+let pat = (one 0.33 $ "1(<3 2 2 1>,16,<0 1 7>)") :: Pattern Double
+
+d1
+  $ every 1 (chunk 4 (|+ n "<2>"))
+  $ dg1
+  $ shift
+  $ stack [
+    gain pat # s "cat1" # n 13 # cut 222 # bdorbit
+    , (0.5 ~>) $ gain pat # s "ang1" # n 13 # cut 333 # end 0.2 # sdorbit # hpf 1000
+    , sb 0 (# ccv 0) $ shift $ snareverb "0*4"
+    , (0.25 <~) $ s "ss" # speed 0.5 # sdorbit
+    , s "speeds7stab/4" # pad2orbit # cut 78171 # speed 0.5 # n (shiftBy 373 $ irand 20)
+  ] # cps (140/120/2)
+
+  hush
+
+
+d1 $ every 1 (|+ n 5) $ snareverb "0*4" # s "cc"
+
+hush

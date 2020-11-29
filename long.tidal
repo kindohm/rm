@@ -1,0 +1,14 @@
+p "ccs"
+  $ stack [
+    snareverb 0
+    , rev1size (segment 1 $ range 0 127 $ shrand 711)
+    , rev2size (segment 1 $ range 0 127 $ shrand 919)
+  ]
+
+
+
+
+
+
+
+hush

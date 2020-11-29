@@ -1,20 +1,20 @@
 do
-  let pat = (one 0.2 $ "1(<3 7 5 2 1>,16,<1 11 21>)") :: Pattern Double
+  let pat = (one 0.5 $ "1(<3 7 5 2 1>,16,<1 11 21>)") :: Pattern Double
   d1
     $ limit
-    $ chunk 4 (|+ n 1)
     $ dg5
     $ stack [
         gain pat # n (segment 1 $ shiftBy 91 $ choose [4,17,6,9,13]) 
           # s "elem1" # gain 0.9 # cut 2834
           # speed "<1 1 1 1 -1>"
           # staborbit
-      , gain pat # s "bd" # n 6 # bdorbit
+      , gain pat # s "bd" # n 6 # bdorbit # shape 0.1
       , (0.125 <~) $ s "sd/2" # n 2 # shape 0.2 # sdorbit
-      , gain "1(<3 5 7>,16,<0 6 1>)" # s "ch" # n 1 # gain 0.7
+      , (|* gain 0.6) $ gain "1(<3 5 7>,16,<0 6 1>)" # s "ch" # n 1 
       , roll 1 $ (0.25 <~) $ s "sub/4" # n 1 # end 0.5 # cut 7839 # gain 0.9
-      , roll 1 $ (0.25 <~) $ s "itmepad/4" # n 181 # cut 1112 # gain 0.7 # hpf 400 
+      , roll 1 $ (0.25 <~) $ s "itmepad/4" # n 181 # cut 1112 # gain 0.7 # hpf 400 # padorbit
     ] # cps (180/120/2)
+
   p "ccs"
     $ stack [
       snareverb 0
@@ -25,11 +25,10 @@ do
     4, 17, 22, 31
 
     d2 
-      $ superimpose ((1000 ~>) . (|* speed 0.5))
       $ slow 3
       $ s "scrape*64" 
       # beginend (range "< 0.4 0.2 0.5>" "<0.6 0.7 0.8 1>" $ slow 3 saw) (range 0.03 0.07 $ slow 3.1 tri)
-      # pad2orbit # gain 0.6 # speed "<0.8>"
+      # pad2orbit # gain 0.6 # speed "<1 1 0.5>"
 
 
     hush

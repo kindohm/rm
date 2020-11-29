@@ -1,0 +1,13 @@
+d1
+  $ cpsDisc 0.125 0.5
+  $ limit
+  $ ssb 0.333 rev
+  $ stack [
+    s "foam1" # n "<5 7 8>" # speed "<1 0.5>" # staborbit # gain 0.8
+    , plyWith "<5 10 15>" (|* gain 0.96) $ s "[bd]" # n 3 # bdorbit # shape 0.5 # cut 8811
+    , plyWith "<5 10 15>" (|* gain 0.96) $ s "ch" # percorbit
+    , slow 3 $ (0.5 ~>) $ s "tek" # n (irand 10) # shape 0.3 # sdorbit
+    , slow 4 $ s "foam1" # n "<16 16 20>" # pad2orbit # gain 1 # hpf 100 # speed 0.5
+  ] # cps "<3 1 2 4>"
+
+  hush

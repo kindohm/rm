@@ -1,0 +1,21 @@
+let pat = "1(<3 2 3 3 1 5>,16,<0 5>)"
+
+d1
+  $ limit
+  $ ssb 0.33 (within (0.75, 1) (const $ roll 0.33 $ shiftBy 444 $ n "~ ~ ~ 1" # s "stukit" # sdorbit # cut 22))
+  $ shift
+  $ stack [
+    one 0.333 $ gain pat # s "stukit" # bdorbit
+    , one 0.333 $ gain pat # s "sil" 
+      # sdorbit 
+      # cut 22 # n 1
+      # beginend (range 0.1 0.2 $ slow 10 saw) 0.04
+      # gain 1.2
+      # shape 0.1
+    , struct (inv pat) $ s "stukit" # n 2 # gain (range 1 0.8 $ fast (12/3) $ saw)
+    , snareverb (segment 2 $ shiftBy 8222 $ choose [0,0,0,0])
+    , g $ s "grain3*8" # n (shiftBy 343 $ irand 30) # speed (range 0.5 1 $ shrand 8293) 
+      # sdorbit # gain 0.8 # cut 22
+  ] # cps (160/120/2)
+
+  hush

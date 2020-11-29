@@ -44,7 +44,7 @@ let
   perf11 pat = ccv pat # ccn 46 # rytm # midichan 0
   g x = (const $ s "~") $ x
   limit x = (|* gain 1.2) $ x
-  cpsDisc min max = (|* cps (range min max $ slow 33891 rand))
+  cpsDisc min max = (|* cps (segment 1 $ range min max $ slow 33891 rand))
   cpsTri min max dur = (|* cps (range min max $ slow dur tri))
   shrand x = (shiftBy x $ rand)
   shiftby = shiftBy
@@ -65,8 +65,10 @@ let
   rev1size pat = ccv pat # s "cc" # ccn 6
   rev2size pat = ccv pat # s "cc" # ccn 7
   one prob x = sb prob (stutWith 2 0.0625 id) $ shift $ x
+  one12 prob x = sb prob (stutWith 2 (1/12) id) $ shift $ x
   roll prob x = sb prob (stutWith 2 (0.0625*3) id) $ shift $ x
   roll2 prob x = sb prob (stutWith 2 (0.125*3) id) $ shift $ x
+  roll' = roll2
   thicken x = superimpose ((|* speed 0.97) . (# pan (shiftBy 30 $ rand)) . (# cut 5))
                   $ superimpose ((|* speed 1.02) . (# pan (shiftBy 32 $ rand)) . (# cut 4)) $ x
   padstut prob x = ssb 0.2 (stutWith "<7 4 5 6 8>" "<0.125 0.333 0.25>" (# gain 0.9)) $ shift $ x
@@ -84,6 +86,8 @@ let
   rep' times x = stutWith times (0.0625*3) id $ x
   beginend bpat durpat = (begin bpat) # (end $ (+) <$> bpat <*> durpat)
   be = beginend
+  clutch i = transition tidal True (Sound.Tidal.Transition.clutch) i
+  clutchIn i t = transition tidal True (Sound.Tidal.Transition.clutchIn t) i
 
 d1 $ s "harmor" # midichan 0 # y (range 0 127 $ slow 33 rand)
 
